@@ -1,0 +1,28 @@
+envfile = ".env"
+
+[tasks]
+ex0 = "uv run src/azureopenai_langchain1/ex0.py"
+ex1 = "uv run src/azureopenai_langchain1/ex1.py"
+
+# ======== utils
+format.shell = """
+ruff format &&
+# biome format --write . &&
+dprint fmt --config ~/dprint.json &&
+textlint --fix "**/*.md"
+"""
+
+update.shell = "uv lock -U && uv sync && uv cache prune"
+check = "uv run mypy src/"
+
+uvsync = "uv sync"
+requirements = "uv pip compile pyproject.toml --no-deps -o requirements.txt"
+sync = ["uvsync", "requirements"]
+
+trivy-config = "trivy config ."
+trivy-fs = "trivy fs ."
+trivy-check = ["trivy-config", "trivy-fs"]
+trivy-license = "trivy fs --scanners license --severity HIGH,CRITICAL ."
+trivy-sbom = "trivy fs --scanners vuln --format cyclonedx --output sbom.cdx.json ."
+trivy-sbom-spdx = "trivy fs --scanners vuln --format spdx-json --output sbom.spdx.json ."
+sbom = ["requirements", "trivy-sbom", "trivy-sbom-spdx"]

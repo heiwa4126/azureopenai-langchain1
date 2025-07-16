@@ -1,0 +1,26 @@
+[project]
+name = "azureopenai-langchain1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+  { name = "Masato Ota", email = "ohtam@nec.com" },
+]
+requires-python = ">=3.12"
+dependencies = [
+  "langchain>=0.3.26",
+  "langchain-openai>=0.3.28",
+  "openai>=1.96.1",
+]
+
+[project.scripts]
+azureopenai-langchain1 = "azureopenai_langchain1:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.17.0",
+]
