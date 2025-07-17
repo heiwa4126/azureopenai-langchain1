@@ -17,13 +17,13 @@ llm = AzureChatOpenAI(model="o4-mini")
 class Joke(BaseModel):
     """Joke to tell user."""
 
-    setup: str = Field(description="The setup of the joke")
-    punchline: str = Field(description="The punchline to the joke")
+    setup: str = Field(description="ジョークの前振り")
+    punchline: str = Field(description="ジョークのオチ")
     rating: Optional[int] = Field(
-        default=None, description="How funny the joke is, from 1 to 10"
+        default=None, description="ジョークの面白さの評価(1~10)"
     )
 
 
 structured_llm = llm.with_structured_output(Joke)
 
-pp(structured_llm.invoke("Tell me a joke about cats"))
+pp(structured_llm.invoke("猫がテーマのジョークを教えて"))

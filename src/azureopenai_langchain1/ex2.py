@@ -13,6 +13,10 @@ llm = AzureChatOpenAI(model="o4-mini")
 
 
 class Book(BaseModel):
+    """
+    Represents a book with its title, author, genre, and summary.
+    """
+
     title: str = Field(description="本のタイトル")
     author: str = Field(description="著者名")
     genre: str = Field(description="ジャンル")
@@ -30,6 +34,10 @@ chain = prompt | llm.with_structured_output(Book)
 
 input = {"book": "1Q84"}
 output = chain.invoke(input)
+# mypyに怒られないためには
+#  output_dict = chain.invoke(input)
+#  output = Book.model_validate(output_dict)
+# なんだけど、ここまでやるか?
 
 print("\n=== type(output) ===")
 print(type(output))  # <-- <class '__main__.Book'> になっているはず
