@@ -1,6 +1,6 @@
 """
 LangChain で 構造化出力
-.with_structured_output() を使う例
+.with_structured_output() を Pydanticで使う例
 """
 
 from pprint import pp
