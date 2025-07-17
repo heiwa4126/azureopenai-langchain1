@@ -7,7 +7,9 @@ ex2 = "uv run src/azureopenai_langchain1/ex2.py"
 ex2b = "uv run src/azureopenai_langchain1/ex2b.py"
 ex2s = "uv run src/azureopenai_langchain1/ex2s.py"
 ex2t = "uv run src/azureopenai_langchain1/ex2t.py"
+ex2js = "uv run src/azureopenai_langchain1/ex2js.py"
 ex2z = "uv run src/azureopenai_langchain1/ex2z.py"
+ex2zs = "uv run src/azureopenai_langchain1/ex2zs.py"
 
 # ======== utils
 format.shell = """

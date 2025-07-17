@@ -32,12 +32,15 @@ poe update # ときどきでいいから実行してモジュールを更新す�
 ```sh
 poe ex0  # openaiパッケージを使ったサンプル
 poe ex1  # LangChainを使った最小サンプル
+poe ex1s # ex1の非同期 & ストリーミング版
 
-# 構造化出力の練習
+# 構造化出力(structured output)の練習
 poe ex2  # with_structured_outputとPydantic
 poe ex2b  # 構造化出力の説明用にwith_structured_outputを使わない例
 poe ex2s  # ex2を複数書籍にしたもの
 poe ex2t  # PydanticのかわりにTypeDictを使ったもの
+poe ex2js # PydanticのかわりにJSON Schema を使ったもの
+poe ex2z  # https://python.langchain.com/docs/how_to/structured_output/ を日本語にした「猫のジョーク」
 ```
 
 ## structured output に関して

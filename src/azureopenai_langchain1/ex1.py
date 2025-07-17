@@ -6,7 +6,7 @@ from langchain_openai import AzureChatOpenAI
 
 llm = AzureChatOpenAI(model="o4-mini")
 result = llm.invoke("LangChain の歌を作って")
-print(result)
+print(result.content)
 
 """
 サンプル出力:

@@ -1,6 +1,7 @@
 """
 LangChain で 構造化出力
 .with_structured_output() を TypedDictで使う例
+json_schema 版はめんどくさいからやらない...
 """
 
 import json
