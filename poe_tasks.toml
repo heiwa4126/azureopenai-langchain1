@@ -3,6 +3,8 @@ envfile = ".env"
 [tasks]
 ex0 = "uv run src/azureopenai_langchain1/ex0.py"
 ex1 = "uv run src/azureopenai_langchain1/ex1.py"
+ex2 = "uv run src/azureopenai_langchain1/ex2.py"
+ex2b = "uv run src/azureopenai_langchain1/ex2b.py"
 
 # ======== utils
 format.shell = """
