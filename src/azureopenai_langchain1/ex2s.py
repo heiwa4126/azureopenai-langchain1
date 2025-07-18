@@ -4,7 +4,7 @@ ex2.pyを複数の本の情報を扱えるように改造した
 """
 
 from pprint import pp
-from typing import List
+from typing import Annotated, List
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import AzureChatOpenAI
@@ -14,14 +14,14 @@ llm = AzureChatOpenAI(model="o4-mini")
 
 
 class Book(BaseModel):
-    title: str = Field(description="本のタイトル")
-    author: str = Field(description="著者名")
-    genre: str = Field(description="ジャンル")
-    summary: str = Field(description="あらすじ")
+    title: Annotated[str, Field(description="本のタイトル")]
+    author: Annotated[str, Field(description="著者名")]
+    genre: Annotated[str, Field(description="ジャンル")]
+    summary: Annotated[str, Field(description="あらすじ")]
 
 
 class Books(BaseModel):
-    books: List[Book] = Field(description="本の情報のリスト")
+    books: Annotated[List[Book], Field(description="本の情報のリスト")]
 
 
 prompt = ChatPromptTemplate.from_messages(

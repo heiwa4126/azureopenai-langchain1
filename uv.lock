@@ -30,8 +30,7 @@ name = "azureopenai-langchain1"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "langchain" },
-    { name = "langchain-openai" },
+    { name = "langchain", extra = ["openai"] },
     { name = "openai" },
 ]
 
@@ -43,8 +42,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "langchain", specifier = ">=0.3.26" },
-    { name = "langchain-openai", specifier = ">=0.3.28" },
+    { name = "langchain", extras = ["openai"], specifier = ">=0.3.26" },
     { name = "openai", specifier = ">=1.96.1" },
 ]
 
@@ -313,6 +311,11 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7f/13/a9931800ee42bbe0f8850dd540de14e80dda4945e7ee36e20b5d5964286e/langchain-0.3.26.tar.gz", hash = "sha256:8ff034ee0556d3e45eff1f1e96d0d745ced57858414dba7171c8ebdbeb5580c9", size = 10226808, upload-time = "2025-06-20T22:23:01.174Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f1/f2/c09a2e383283e3af1db669ab037ac05a45814f4b9c472c48dc24c0cef039/langchain-0.3.26-py3-none-any.whl", hash = "sha256:361bb2e61371024a8c473da9f9c55f4ee50f269c5ab43afdb2b1309cb7ac36cf", size = 1012336, upload-time = "2025-06-20T22:22:58.874Z" },
+]
+
+[package.optional-dependencies]
+openai = [
+    { name = "langchain-openai" },
 ]
 
 [[package]]
