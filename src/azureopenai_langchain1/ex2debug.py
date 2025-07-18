@@ -5,6 +5,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import AzureChatOpenAI
 from pydantic import BaseModel, Field
 
+from azureopenai_langchain1.llm_callback import StderrLoggingCallbackHandler
+
 set_debug(True)
 
 
@@ -24,7 +26,7 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-llm = AzureChatOpenAI(model="o4-mini")
+llm = AzureChatOpenAI(model="o4-mini", callbacks=[StderrLoggingCallbackHandler()])
 
 chain = prompt | llm.with_structured_output(Book)
 
