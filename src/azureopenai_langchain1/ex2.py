@@ -31,12 +31,12 @@ prompt = ChatPromptTemplate.from_messages(
 
 chain = prompt | llm.with_structured_output(Book)
 
-# book = "1Q84"
+book = "1Q84"
 # book = "アノーラ"
 # book = "ホームレス中学生"
 # book = "田村裕の「ホームレス中学生」"
 # book = "トカトントン"
-book = "太宰治の「トカトントン」"
+# book = "太宰治の「トカトントン」"
 
 output = chain.invoke(book)
 
