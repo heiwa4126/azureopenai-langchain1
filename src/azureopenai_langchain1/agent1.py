@@ -2,8 +2,6 @@
 「大阪と京都の現在気温を比較して」的な質問に答えるAIエージェント
 """
 
-import asyncio
-
 from langchain_core.tools import tool
 from langchain_openai import AzureChatOpenAI
 from langgraph.prebuilt import create_react_agent
@@ -13,7 +11,7 @@ from langgraph.prebuilt import create_react_agent
 @tool
 async def get_temperature(location: str) -> int:
     """
-    指定された場所の現在の気温(摂氏、整数値)を返す。引数は地名(例: 東京、大阪)。
+    指定された場所の現在の気温(摂氏、整数値)を返す。引数は地名(例: 東京、大阪)
     """
     return 25  # 25°Cはダミー値。あとで Weather API等で実装する
 
@@ -32,8 +30,11 @@ graph = create_react_agent(llm, [get_temperature])
 
 
 # エージェントの実装はここまで
+
 # 実行
 if __name__ == "__main__":
+    import asyncio
+
     from langchain_core.prompts import ChatPromptTemplate
 
     prompt = ChatPromptTemplate.from_messages(
@@ -43,16 +44,8 @@ if __name__ == "__main__":
         ]
     )
 
-    async def main_stream(user_input: str):
-        input = prompt.invoke(input=user_input)
-        async for msg, metadata in graph.astream(input=input, stream_mode="stream"):
-            print(f"\n==== from node {metadata['langgraph_node']} ====")
-            print(f"{msg.__class__.__name__}: {msg.content}")
-
     async def main(user_input: str):
-        input = prompt.invoke(user_input)
-        output = await graph.ainvoke(input)
-        for message in output["messages"]:
-            print(f"{message.__class__.__name__}: {message}")
+        output = await graph.ainvoke(prompt.invoke(user_input))
+        print(output["messages"][-1].content)  # 最後のメッセージだけを表示:
 
     asyncio.run(main("大阪と京都の現在気温を比較して"))

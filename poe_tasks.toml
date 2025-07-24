@@ -12,7 +12,7 @@ ex2z = "uv run src/azureopenai_langchain1/ex2z.py"
 ex2zs = "uv run src/azureopenai_langchain1/ex2zs.py"
 
 agent1 = "uv run src/azureopenai_langchain1/agent1.py"
-agent1a = "uv run src/azureopenai_langchain1/agent1a.py"
+agent1e = "uv run src/azureopenai_langchain1/agent1e.py"
 
 # ======== utils
 format.shell = """

@@ -2,8 +2,6 @@
 「大阪と京都の現在気温を比較して」的な質問に答えるAIエージェント
 """
 
-import asyncio
-
 from langchain_core.tools import tool
 from langchain_openai import AzureChatOpenAI
 from langgraph.prebuilt import create_react_agent
@@ -32,8 +30,11 @@ graph = create_react_agent(llm, [get_temperature])
 
 
 # エージェントの実装はここまで
+
 # 実行
 if __name__ == "__main__":
+    import asyncio
+
     from langchain_core.prompts import ChatPromptTemplate
 
     prompt = ChatPromptTemplate.from_messages(
@@ -43,16 +44,39 @@ if __name__ == "__main__":
         ]
     )
 
-    async def main_stream(user_input: str):
-        input = prompt.invoke(input=user_input)
-        async for msg, metadata in graph.astream(input=input, stream_mode="stream"):
-            print(f"\n==== from node {metadata['langgraph_node']} ====")
-            print(f"{msg.__class__.__name__}: {msg.content}")
+    def format_message(message):
+        """メッセージを人間に読みやすい形式で表示する"""
+        message_type = message.__class__.__name__
+
+        if message_type == "ToolMessage":
+            # ツールメッセージの場合
+            tool_name = getattr(message, "name", "unknown")
+            tool_call_id = getattr(message, "tool_call_id", "unknown")
+            content = message.content
+            return f"{message_type}: {tool_name}の結果: {content} [Call ID: {tool_call_id}]"
+
+        elif hasattr(message, "tool_calls") and message.tool_calls:
+            # ツール呼び出しがある場合
+            tool_calls = []
+            for tool_call in message.tool_calls:
+                tool_name = tool_call.get("name", "unknown")
+                tool_id = tool_call.get("id", "unknown")
+                tool_args = tool_call.get("args", {})
+                args_str = ", ".join([f"{k}='{v}'" for k, v in tool_args.items()])
+                tool_calls.append(f"{tool_name}({args_str}) [ID: {tool_id}]")
+            return f"{message_type}: ツール呼び出し: {', '.join(tool_calls)}"
+
+        elif hasattr(message, "content") and message.content:
+            # コンテンツがある場合はそのまま表示
+            return f"{message_type}: {message.content}"
+
+        else:
+            # その他の場合はしょうがないので元の形式で表示
+            return f"{message_type}: {message.content if hasattr(message, 'content') else str(message)}"
 
     async def main(user_input: str):
-        input = prompt.invoke(user_input)
-        output = await graph.ainvoke(input)
+        output = await graph.ainvoke(prompt.invoke(user_input))
         for message in output["messages"]:
-            print(f"{message.__class__.__name__}: {message}")
+            print(format_message(message))
 
     asyncio.run(main("大阪と京都の現在気温を比較して"))
