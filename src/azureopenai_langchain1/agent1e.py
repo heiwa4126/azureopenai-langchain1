@@ -7,7 +7,7 @@ from langchain_openai import AzureChatOpenAI
 from langgraph.prebuilt import create_react_agent
 
 
-# 気温取得関数
+# 気温取得tool
 @tool
 async def get_temperature(location: str) -> int:
     """
@@ -31,8 +31,8 @@ graph = create_react_agent(llm, [get_temperature])
 
 # エージェントの実装はここまで
 
-# 実行
 if __name__ == "__main__":
+    # 実行
     import asyncio
 
     from langchain_core.prompts import ChatPromptTemplate
@@ -75,7 +75,7 @@ if __name__ == "__main__":
             return f"{message_type}: {message.content if hasattr(message, 'content') else str(message)}"
 
     async def main(user_input: str):
-        output = await graph.ainvoke(prompt.invoke(user_input))
+        output = await (prompt | graph).ainvoke(user_input)
         for message in output["messages"]:
             print(format_message(message))
 

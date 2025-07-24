@@ -7,7 +7,7 @@ from langchain_openai import AzureChatOpenAI
 from langgraph.prebuilt import create_react_agent
 
 
-# 気温取得関数
+# 気温取得tool
 @tool
 async def get_temperature(location: str) -> int:
     """
@@ -31,8 +31,8 @@ graph = create_react_agent(llm, [get_temperature])
 
 # エージェントの実装はここまで
 
-# 実行
 if __name__ == "__main__":
+    # サンプル実行
     import asyncio
 
     from langchain_core.prompts import ChatPromptTemplate
@@ -45,7 +45,11 @@ if __name__ == "__main__":
     )
 
     async def main(user_input: str):
-        output = await graph.ainvoke(prompt.invoke(user_input))
-        print(output["messages"][-1].content)  # 最後のメッセージだけを表示:
+        output = await (prompt | graph).ainvoke(user_input)
+        print(output["messages"][-1].content)  # 最後の結論だけを表示
 
     asyncio.run(main("大阪と京都の現在気温を比較して"))
+    # その他
+    #  asyncio.run(main("東京の現在の気温は?"))
+    #  asyncio.run(main("この世はすべて幻なのじゃ"))  # 気温とまったく関係ない質問
+    # などいろいろ試してみてください
