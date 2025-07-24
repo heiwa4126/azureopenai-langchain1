@@ -11,6 +11,9 @@ ex2js = "uv run src/azureopenai_langchain1/ex2js.py"
 ex2z = "uv run src/azureopenai_langchain1/ex2z.py"
 ex2zs = "uv run src/azureopenai_langchain1/ex2zs.py"
 
+agent1 = "uv run src/azureopenai_langchain1/agent1.py"
+agent1a = "uv run src/azureopenai_langchain1/agent1a.py"
+
 # ======== utils
 format.shell = """
 ruff format &&
@@ -20,7 +23,8 @@ textlint --fix "**/*.md"
 """
 
 update.shell = "uv lock -U && uv sync && uv cache prune"
-check = "uv run mypy src/"
+check = "ruff check src/"
+mypy = "uv run mypy src/"
 
 uvsync = "uv sync"
 requirements = "uv pip compile pyproject.toml --no-deps -o requirements.txt"
