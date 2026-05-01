@@ -22,6 +22,6 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
-  "langsmith>=0.7.31",
+  "langsmith>=0.8.0",
   "mypy>=1.17.0",
 ]
